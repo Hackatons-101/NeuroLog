@@ -5,7 +5,7 @@ from os.path import join, dirname
 from watson_developer_cloud import ToneAnalyzerV3
 
 humanName = "Bob"
-
+inputText = "sometimes I just do not want to get out of bed."
 
 tone_analyzer = ToneAnalyzerV3(
     username='0b57ea01-39f5-4365-be78-4c13c960b6df',
@@ -16,7 +16,7 @@ tone_analyzer = ToneAnalyzerV3(
 emotions = ["anger", "disgust", "fear", "joy", "sadness"]
 
 
-parse = json.loads(json.dumps(tone_analyzer.tone(text='sometimes I just do not want to get out of bed.'),
+parse = json.loads(json.dumps(tone_analyzer.tone(text= inputText),
                  indent=2))
 things = []
 
