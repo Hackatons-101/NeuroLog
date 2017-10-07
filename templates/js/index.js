@@ -8,7 +8,7 @@ $('.login').on('submit', function(e) {
   setTimeout(function (){
 
 
-  window.location = "file:///C:/Users/wstarr/Desktop/khe/diary.html";
+  window.location = "diary.html";
 
 }, 2000)
 });
