@@ -14,6 +14,9 @@ if(username == "Psychologist" || "Admin" || "admin"){
 else{
 	//push from javascript to python linker file
 	window.location = "diary.html";
+	usernameDiary = username;
+	
+
 }
 
 
