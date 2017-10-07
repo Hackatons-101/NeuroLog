@@ -21,7 +21,6 @@ parse = json.loads(json.dumps(tone_analyzer.tone(text= inputText),
 things = []
 
 for x in range(0,5):
-	print(emotions[x])
 	things.append(100*(parse['document_tone']['tone_categories'][0]['tones'][x]['score']))
 
 
