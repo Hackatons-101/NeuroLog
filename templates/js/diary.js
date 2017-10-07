@@ -1,4 +1,5 @@
 function save(){
+<<<<<<< HEAD
 	console.log("save");
 	
 =======
