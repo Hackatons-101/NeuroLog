@@ -8,8 +8,14 @@ $('.login').on('submit', function(e) {
   $('.login').removeClass('focused').addClass('loading');
   setTimeout(function (){
 
+if(username == "Psychologist" || "Admin" || "admin"){
+	window.location = "psychologistView.html" //FIX THIS?
+}
+else{
+	//push from javascript to python linker file
+	window.location = "diary.html";
+}
 
-  window.location = "diary.html";
 
-}, 1000)
+}, 100)
 });
