@@ -18,7 +18,10 @@
     <h1>Tell us about your day.</h1>
   </header>
   <div class='message'>
-    <textarea id = "diary" placeholder="We're here to listen."></textarea>
+    <form action="submit" id ="textform" method="POST">
+      <textarea id = "diary" placeholder="We're here to listen." name = "diary"></textarea>
+      <input type="submit" value="Submit">
+    </form>
   </div>
   <footer>
     <button class = "submit-btn" type = "submit" onclick="save()">Submit</button>

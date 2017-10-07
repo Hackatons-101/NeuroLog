@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 import datetime
+import cgi
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
@@ -34,3 +35,18 @@ class Diary(db.Model):
 
 	def __repr__(self):
 		return '<Diary %r>' % self.title
+
+app = Flask(__name__)
+ 
+@app.route("/")
+
+def hello():
+	return render_template('diary.html')
+
+@app.route("/", methods = ["POST"])
+def my_form_post():
+
+	txt = request.form	
+ 
+if __name__ == "__main__":
+    app.run()
