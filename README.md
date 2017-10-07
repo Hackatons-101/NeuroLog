@@ -1,2 +1,1 @@
-# pyschoAnalyzer
-khe
+# psychoAnalyzer
