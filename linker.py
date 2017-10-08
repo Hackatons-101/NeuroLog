@@ -1,52 +1,50 @@
-from flask import Flask
+from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 import datetime
-import cgi
+import os.path
+import tempfile
+
+
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
-db = SQLAlchemy(app)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(tempfile.gettempdir(), 'test.db')
+db = SQLAlchemy(app) 	
 
 
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True, nullable=False)
-    email = db.Column(db.String(120), unique=True, nullable=False)
-
-    def __repr__(self):
-        return '<User %r>' % self.username
 
 class Patient(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	name = db.Column(db.String(80), unique=True, nullable=False)
 	username = db.Column(db.String(120), unique=True, nullable=False)
 	age = db.Column(db.Integer, primary_key=False)
-	diaries = db.relationship('Diary', backref='Patient', lazy=True)
+	diaries = db.relationship('Diary', backref='patient', lazy='dynamic')
 
-	def __repr__(self):
-		return '<Patient %r>' % self.title
 
 class Diary(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	time = db.Column(db.DateTime, default=datetime.datetime.utcnow)
-	diaryInfo = db.Column(db.String(100000), nullable=True)
-	user_ID = db.Column(db.Integer, db.ForeignKey('Patient.ID'),
-   		nullable=False)
+	diaryInfo = db.Column(db.String(100), nullable=True)
+	user_ID = db.Column(db.Integer, db.ForeignKey('patient.id'))
 
-	def __repr__(self):
-		return '<Diary %r>' % self.title
 
-app = Flask(__name__)
- 
-@app.route("/")
+size = db.session.query(Diary).count()
+print(size)
+db.session.close();
 
+@app.route("/", methods = ["GET"])
 def hello():
 	return render_template('diary.html')
 
 @app.route("/", methods = ["POST"])
 def my_form_post():
+	txt = request.form["diary"]
+	print(txt)
+	newDiary = Diary(diaryInfo = txt)
+	db.session.add(newDiary)
+	db.session.commit()
+	return render_template('diary.html')
 
-	txt = request.form	
- 
+
+
 if __name__ == "__main__":
     app.run()

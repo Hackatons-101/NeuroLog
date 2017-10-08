@@ -1,11 +1,20 @@
 import json
 import os
-from flask import Flask, render_template
+from flask import Flask, render_template, request
+from flask_sqlalchemy import SQLAlchemy
 from os.path import join, dirname
-from watson_developer_cloud import ToneAnalyzerV3
 
-humanName = "Bob"
-inputText = "sometimes I just do not want to get out of bed."
+from watson_developer_cloud import ToneAnalyzerV3
+import tempfile
+from linker import Diary
+
+app = Flask(__name__) 
+
+
+textInput = Diary.query.order_by(Diary.time)[-1]
+inputText = textInput.diaryInfo
+print(inputText)
+humanName = "Cathy" 
 
 tone_analyzer = ToneAnalyzerV3(
     username='0b57ea01-39f5-4365-be78-4c13c960b6df',
@@ -24,12 +33,9 @@ for x in range(0,5):
 	things.append(100*(parse['document_tone']['tone_categories'][0]['tones'][x]['score']))
 
 
-app = Flask(__name__)
- 
-@app.route("/")
-
+@app.route("/", methods=['GET', 'POST'])
 def hello():
-	return render_template('index.html', name = humanName, anger= things[0], disgust = things[1], fear= things[2], joy = things[3], sadness = things[4])
+	return render_template('psychologistView.html', name = humanName, anger= things[0], disgust = things[1], fear= things[2], joy = things[3], sadness = things[4])
 
  
 if __name__ == "__main__":
