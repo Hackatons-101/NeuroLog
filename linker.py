@@ -23,7 +23,7 @@ class Patient(db.Model):
 class Diary(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	time = db.Column(db.DateTime, default=datetime.datetime.utcnow)
-	diaryInfo = db.Column(db.String(100), nullable=True)
+	diaryInfo = db.Column(db.String(100000), nullable=True)
 	user_ID = db.Column(db.Integer, db.ForeignKey('patient.id'))
 
 
@@ -35,7 +35,7 @@ db.session.close();
 def hello():
 	return render_template('diary.html')
 
-@app.route("/", methods = ["POST"])
+@app.route("/diary", methods = ["POST"])
 def my_form_post():
 	txt = request.form["diary"]
 	print(txt)

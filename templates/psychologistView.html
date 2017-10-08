@@ -2,7 +2,7 @@
 <html >
 <head>
   <meta charset="UTF-8">
-  <title>simple bar chart with css</title>
+  <title>pyschoanalyzer</title>
   
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
 
@@ -62,8 +62,7 @@
 </head>
 
 <body>
-  
-    <h1>PsychoAnalyser</h1>
+
     <h2>
     <font size= "+5">
     <center>
@@ -71,6 +70,11 @@
   </center>
    </font>
     </h2>
+    <h5>
+    <center>
+    Most Recent Emotion Values:
+    </center>
+    </h5>
   
 <ul class="chart">
   <li>
@@ -89,9 +93,43 @@
     <span style="height:{{sadness}}%" title="Sadness"></span>
   </li>
 </ul>
-<canvas id="myCanvas" width="200" height="100"
-style="border:1px solid #000000;">
-</canvas>
+<br>
+<br>
+<h6>
+    <center>
+    Week's Depression/Sadness Regression:
+    </center>
+    </h6>
+<center>
+  <div id="chart_div" style="width: 900px; height: 400px;"></div>
+  <h2> 
+    <font size= "+2">
+      {{warningText}} 
+    </font>
+  </h2>
+</center>
 </body>
 <footer>version5</footer>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+  var data = google.visualization.arrayToDataTable([
+    ['Days', 'Sadness'],
+    [1,{{day0}}], [2,{{day1}}], [3,{{day2}}], [4,{{day3}}], [5,{{day4}}]]);
+
+  var options = {
+    hAxis: {title: 'Days'},
+    vAxis: {title: 'Sadness'},
+    legend: 'none',
+    trendlines: { 0: {} }    // Draw a trendline for data series 0.
+  };
+
+  var chart = new google.visualization.ScatterChart(document.getElementById('chart_div'));
+  chart.draw(data, options);
+
+      }
+    </script>
 </html>
