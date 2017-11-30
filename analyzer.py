@@ -27,11 +27,6 @@ textInput = Diary.query.order_by(Diary.time)[-1]
 inputText = textInput.diaryInfo
 humanName = "Cathy" 
 
-tone_analyzer = ToneAnalyzerV3(
-    username='0b57ea01-39f5-4365-be78-4c13c960b6df',
-    password='jOy2l7J5pn7f',
-    version='2016-05-19')
-
 
 emotions = ["anger", "disgust", "fear", "joy", "sadness"]
 
